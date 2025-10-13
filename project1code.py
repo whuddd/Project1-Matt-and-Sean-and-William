@@ -22,3 +22,18 @@ def calc_avg_body_mass_by_species(data):
     for species in species_mass:
         avg_mass[species] = species_mass[species] / species_count[species]
     return avg_mass
+
+def calc_male_percentage_by_island(data):
+    males = {}
+    total = {}
+    for penguin in data:
+        island = penguin['island']
+        sex = penguin.get('sex', '').strip().lower()
+        if sex in ('male', 'female'):
+            total[island] = total.get(island, 0) + 1
+            if sex == 'male':
+                males[island] = males.get(island, 0) + 1
+    percent_male = {}
+    for island in total:
+        percent_male[island] = (males.get(island, 0) / total[island]) * 100
+    return percent_male
