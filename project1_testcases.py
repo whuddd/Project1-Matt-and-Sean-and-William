@@ -1,6 +1,10 @@
 import unittest
-from project1code import calc_avg_body_mass_by_species, calc_male_percentage_by_island
-
+from project1code import (
+    calc_avg_body_mass_by_species, 
+    calc_male_percentage_by_island,
+    calc_avg_flipper_length_by_species,
+    calc_avg_bill_length_by_sex
+)
 class TestPenguinAnalysis(unittest.TestCase):
 
     # William's Test cases
@@ -83,5 +87,70 @@ class TestPenguinAnalysis(unittest.TestCase):
         result = calc_male_percentage_by_island(data)
         self.assertAlmostEqual(result['Torgersen'], 0.0, places=2)
 
+
+
+#
+    def test_avg_flipper_length_typical(self):
+        data = [
+            {'species': 'Adelie', 'flipper_length_mm': '189', 'sex': 'male'},
+            {'species': 'Adelie', 'flipper_length_mm': '191', 'sex': 'female'},
+            {'species': 'Gentoo', 'flipper_length_mm': '220', 'sex': 'male'}
+        ]
+        self.assertEqual(calc_avg_flipper_length_by_species(data), {'Adelie': 190.0, 'Gentoo': 220.0})
+
+    def test_avg_flipper_length_single_species(self):
+        data = [
+            {'species': 'Chinstrap', 'flipper_length_mm': '200', 'sex': 'male'},
+            {'species': 'Chinstrap', 'flipper_length_mm': '202', 'sex': 'female'},
+        ]
+        self.assertEqual(calc_avg_flipper_length_by_species(data), {'Chinstrap': 201.0})
+
+    def test_avg_flipper_length_missing_values(self):
+        data = [
+            {'species': 'Adelie', 'flipper_length_mm': '195', 'sex': 'male'},
+            {'species': 'Adelie', 'flipper_length_mm': 'NA', 'sex': 'female'},
+            {'species': 'Gentoo', 'flipper_length_mm': '', 'sex': 'male'}
+        ]
+        self.assertEqual(calc_avg_flipper_length_by_species(data), {'Adelie': 195.0})
+
+    def test_avg_flipper_length_no_valid_entries(self):
+        data = [
+            {'species': 'Adelie', 'flipper_length_mm': 'NA', 'sex': 'male'},
+            {'species': 'Adelie', 'flipper_length_mm': '', 'sex': 'female'}
+        ]
+        self.assertEqual(calc_avg_flipper_length_by_species(data), {})
+    def test_avg_bill_length_typical(self):
+        data = [
+            {'sex': 'male', 'bill_length_mm': '40.9', 'species': 'Adelie'},
+            {'sex': 'female', 'bill_length_mm': '37.8', 'species': 'Adelie'},
+            {'sex': 'male', 'bill_length_mm': '41.1', 'species': 'Adelie'}
+        ]
+        result = calc_avg_bill_length_by_sex(data)
+        self.assertAlmostEqual(result['male'], 41.0)
+        self.assertAlmostEqual(result['female'], 37.8)
+
+    def test_avg_bill_length_one_sex(self):
+        data = [
+            {'sex': 'female', 'bill_length_mm': '38.1', 'species': 'Adelie'},
+            {'sex': 'female', 'bill_length_mm': '38.3', 'species': 'Adelie'}
+        ]
+        self.assertEqual(calc_avg_bill_length_by_sex(data), {'female': 38.2})
+
+    def test_avg_bill_length_missing_value(self):
+        data = [
+            {'sex': 'male', 'bill_length_mm': '42.0', 'species': 'Adelie'},
+            {'sex': 'male', 'bill_length_mm': 'NA', 'species': 'Adelie'},
+            {'sex': 'female', 'bill_length_mm': '36.0', 'species': 'Adelie'}
+        ]
+        self.assertEqual(calc_avg_bill_length_by_sex(data), {'male': 42.0, 'female': 36.0})
+
+    def test_avg_bill_length_invalid_sex(self):
+        data = [
+            {'sex': 'male', 'bill_length_mm': '45.0', 'species': 'Adelie'},
+            {'sex': 'NA', 'bill_length_mm': '50.0', 'species': 'Gentoo'},
+            {'sex': '.', 'bill_length_mm': '51.0', 'species': 'Chinstrap'},
+            {'sex': 'female', 'bill_length_mm': '35.0', 'species': 'Adelie'}
+        ]
+        self.assertEqual(calc_avg_bill_length_by_sex(data), {'male': 45.0, 'female': 35.0})
 if __name__ == '__main__':
     unittest.main(verbosity=2)
