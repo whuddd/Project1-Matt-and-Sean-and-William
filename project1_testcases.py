@@ -1,10 +1,12 @@
 import unittest
-from project1 import calc_avg_body_mass_by_species, calc_male_percentage_by_island
+from project1code import calc_avg_body_mass_by_species, calc_male_percentage_by_island
 
 class TestPenguinAnalysis(unittest.TestCase):
 
+    # William's Test cases
+
     def test_avg_body_mass_typical(self):
-        """Usual case: calculates average for species with valid data."""
+        # Usual case: calculates average for species with valid data.
         data = [
             {'species': 'Adelie', 'body_mass_g': '3700', 'island': 'Torgersen', 'sex': 'male'},
             {'species': 'Adelie', 'body_mass_g': '3800', 'island': 'Torgersen', 'sex': 'female'},
@@ -13,7 +15,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_body_mass_by_species(data), {'Adelie': 3750.0, 'Chinstrap': 3200.0})
 
     def test_avg_body_mass_multiple_species(self):
-        """Usual case: calculates for more than one species."""
+        # Usual case: calculates for more than one species.
         data = [
             {'species': 'Gentoo', 'body_mass_g': '5000', 'island': 'Biscoe', 'sex': 'female'},
             {'species': 'Gentoo', 'body_mass_g': '5100', 'island': 'Biscoe', 'sex': 'male'},
@@ -22,7 +24,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_body_mass_by_species(data), {'Gentoo': 5050.0, 'Adelie': 3600.0})
 
     def test_avg_body_mass_missing_values(self):
-        """Edge case: handles missing or 'NA' body mass values."""
+        # Edge case: handles missing or 'NA' body mass values.
         data = [
             {'species': 'Adelie', 'body_mass_g': '3700', 'island': 'Torgersen', 'sex': 'male'},
             {'species': 'Adelie', 'body_mass_g': 'NA', 'island': 'Torgersen', 'sex': 'female'},
@@ -31,7 +33,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_body_mass_by_species(data), {'Adelie': 3700.0})
 
     def test_avg_body_mass_no_valid_entries(self):
-        """Edge case: all input rows lack valid mass (should return empty dict)."""
+        # Edge case: all input rows lack valid mass (should return empty dict).
         data = [
             {'species': 'Adelie', 'body_mass_g': 'NA', 'island': 'Torgersen', 'sex': 'male'},
             {'species': 'Adelie', 'body_mass_g': '', 'island': 'Torgersen', 'sex': 'female'}
@@ -41,7 +43,7 @@ class TestPenguinAnalysis(unittest.TestCase):
     # Test cases for calc_male_percentage_by_island
 
     def test_male_percentage_typical(self):
-        """Usual case: computes percent male for island with mix."""
+        # Usual case: computes percent male for island with mix.
         data = [
             {'island': 'Dream', 'sex': 'male'},
             {'island': 'Dream', 'sex': 'female'},
@@ -51,7 +53,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertAlmostEqual(result['Dream'], 66.66666666666666, places=4)
 
     def test_male_percentage_multiple_islands(self):
-        """Usual case: computes percent male for multiple islands."""
+        # Usual case: computes percent male for multiple islands.
         data = [
             {'island': 'Biscoe', 'sex': 'male'},
             {'island': 'Biscoe', 'sex': 'male'},
@@ -63,7 +65,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertAlmostEqual(out['Torgersen'], 50.0, places=2)
 
     def test_male_percentage_na_sex(self):
-        """Edge case: handles 'NA' in sex column, excludes from percent calculation."""
+        # Edge case: handles 'NA' in sex column, excludes from percent calculation.
         data = [
             {'island': 'Biscoe', 'sex': 'male'},
             {'island': 'Biscoe', 'sex': 'NA'},
@@ -73,7 +75,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertAlmostEqual(result['Biscoe'], 50.0, places=2)
 
     def test_male_percentage_all_female(self):
-        """Edge case: island with only females (should yield 0%)."""
+        # Edge case: island with only females (should yield 0%).
         data = [
             {'island': 'Torgersen', 'sex': 'female'},
             {'island': 'Torgersen', 'sex': 'female'}
