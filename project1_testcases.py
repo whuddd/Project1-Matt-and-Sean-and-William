@@ -89,8 +89,9 @@ class TestPenguinAnalysis(unittest.TestCase):
 
 
 
-#Sean's test cases
+    # Sean's Test Cases
     def test_avg_flipper_length_typical(self):
+        # Usual case: calculates average flipper length across multiple species.
         data = [
             {'species': 'Adelie', 'flipper_length_mm': '189', 'sex': 'male'},
             {'species': 'Adelie', 'flipper_length_mm': '191', 'sex': 'female'},
@@ -99,6 +100,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_flipper_length_by_species(data), {'Adelie': 190.0, 'Gentoo': 220.0})
 
     def test_avg_flipper_length_single_species(self):
+        # Usual case: calculates average flipper length for a single species.
         data = [
             {'species': 'Chinstrap', 'flipper_length_mm': '200', 'sex': 'male'},
             {'species': 'Chinstrap', 'flipper_length_mm': '202', 'sex': 'female'},
@@ -106,6 +108,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_flipper_length_by_species(data), {'Chinstrap': 201.0})
 
     def test_avg_flipper_length_missing_values(self):
+        # Edge case: handles missing or empty flipper length values, excluding them.
         data = [
             {'species': 'Adelie', 'flipper_length_mm': '195', 'sex': 'male'},
             {'species': 'Adelie', 'flipper_length_mm': 'NA', 'sex': 'female'},
@@ -114,12 +117,14 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_flipper_length_by_species(data), {'Adelie': 195.0})
 
     def test_avg_flipper_length_no_valid_entries(self):
+        # Edge case: returns an empty dictionary if no entries have valid flipper lengths.
         data = [
             {'species': 'Adelie', 'flipper_length_mm': 'NA', 'sex': 'male'},
             {'species': 'Adelie', 'flipper_length_mm': '', 'sex': 'female'}
         ]
         self.assertEqual(calc_avg_flipper_length_by_species(data), {})
     def test_avg_bill_length_typical(self):
+        # Usual case: calculates average bill length for both male and female penguins.
         data = [
             {'sex': 'male', 'bill_length_mm': '40.9', 'species': 'Adelie'},
             {'sex': 'female', 'bill_length_mm': '37.8', 'species': 'Adelie'},
@@ -130,6 +135,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertAlmostEqual(result['female'], 37.8)
 
     def test_avg_bill_length_one_sex(self):
+        # Usual case: correctly calculates average when only one sex is present.
         data = [
             {'sex': 'female', 'bill_length_mm': '38.1', 'species': 'Adelie'},
             {'sex': 'female', 'bill_length_mm': '38.3', 'species': 'Adelie'}
@@ -137,6 +143,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_bill_length_by_sex(data), {'female': 38.2})
 
     def test_avg_bill_length_missing_value(self):
+        # Edge case: ignores entries with 'NA' for bill length.
         data = [
             {'sex': 'male', 'bill_length_mm': '42.0', 'species': 'Adelie'},
             {'sex': 'male', 'bill_length_mm': 'NA', 'species': 'Adelie'},
@@ -145,6 +152,7 @@ class TestPenguinAnalysis(unittest.TestCase):
         self.assertEqual(calc_avg_bill_length_by_sex(data), {'male': 42.0, 'female': 36.0})
 
     def test_avg_bill_length_invalid_sex(self):
+        # Edge case: ignores entries where sex is not 'male' or 'female'
         data = [
             {'sex': 'male', 'bill_length_mm': '45.0', 'species': 'Adelie'},
             {'sex': 'NA', 'bill_length_mm': '50.0', 'species': 'Gentoo'},
