@@ -89,11 +89,18 @@ def main():
     data = read_penguin_data('penguins.csv')
     avg_mass = calc_avg_body_mass_by_species(data)
     percent_male = calc_male_percentage_by_island(data)
+    avg_flipper_length = calc_avg_flipper_length_by_species(data)
+    avg_bill_length = calc_avg_bill_length_by_sex(data)
     results = {}
     for species, avg in avg_mass.items():
         results[f"Average body mass for {species}"] = avg
     for island, percent in percent_male.items():
         results[f"Percent male on {island}"] = percent
+    for species, avg in avg_flipper_length.items():
+        results[f"Average flipper length for {species}"] = avg
+    for sex, avg in avg_bill_length.items():
+        results[f"Average bill length for {sex} penguins"] = avg
+
     write_results_to_csv(results)
 
 if __name__ == "__main__":
