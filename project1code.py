@@ -1,6 +1,6 @@
 # SI 201 Project 1
 # Names: William Huddleston, Matt, Sean
-# Uniqname/emails: whudd@umich.edu, seanone@umich.edu, 
+# Uniqname/emails: whudd@umich.edu,  seanone@umich.edu, mprovale@umich.edu
 # Collaborators: Each other
 
 # Function authorship:
@@ -95,6 +95,44 @@ def calc_male_percentage_by_island(data):
         percent_male[island] = (males.get(island, 0) / total[island]) * 100
     return percent_male
 
+def calc_avg_body_mass_by_year(data):
+    year_mass = {}
+    year_count = {}
+    for penguin in data:
+        year = penguin.get('year', '').strip()
+        mass = penguin.get('body_mass_g', '').strip()
+        if year and mass.lower() not in ('', 'na'):
+            mass = float(mass)
+            year_mass[year] = year_mass.get(year, 0) + mass
+            year_count[year] = year_count.get(year, 0) + 1
+    avg_mass_by_year = {}
+    for year in year_mass:
+        avg_mass_by_year[year] = year_mass[year] / year_count[year]
+    return avg_mass_by_year
+
+
+def find_island_with_highest_avg_flipper_length(data):
+    island_flipper = {}
+    island_count = {}
+    for penguin in data:
+        island = penguin.get('island', '').strip()
+        flipper = penguin.get('flipper_length_mm', '').strip()
+        if island and flipper.lower() not in ('', 'na'):
+            flipper = float(flipper)
+            island_flipper[island] = island_flipper.get(island, 0) + flipper
+            island_count[island] = island_count.get(island, 0) + 1
+
+    avg_flipper_by_island = {}
+    for island in island_flipper:
+        avg_flipper_by_island[island] = island_flipper[island] / island_count[island]
+
+    if avg_flipper_by_island:
+        highest_island = max(avg_flipper_by_island, key=avg_flipper_by_island.get)
+        return highest_island, avg_flipper_by_island[highest_island]
+    else:
+        return None, None
+
+
 def write_results_to_csv(results, filename="results.csv"):
     with open(filename, "w", newline='') as csvfile:
         writer = csv.writer(csvfile)
@@ -107,6 +145,8 @@ def main():
     percent_male = calc_male_percentage_by_island(data)
     avg_flipper_length = calc_avg_flipper_length_by_species(data)
     avg_bill_length = calc_avg_bill_length_by_sex(data)
+    avg_mass_year = calc_avg_body_mass_by_year(data)
+    top_island, top_flipper = find_island_with_highest_avg_flipper_length(data)
     results = {}
     for species, avg in avg_mass.items():
         results[f"Average body mass for {species}"] = avg
@@ -116,7 +156,8 @@ def main():
         results[f"Average flipper length for {species}"] = avg
     for sex, avg in avg_bill_length.items():
         results[f"Average bill length for {sex} penguins"] = avg
-
+    for year, avg in avg_mass_year.items():
+        results[f"Average body mass in {year}"] = avg
     write_results_to_csv(results)
 
 if __name__ == "__main__":

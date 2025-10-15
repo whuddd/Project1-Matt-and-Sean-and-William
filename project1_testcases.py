@@ -3,7 +3,10 @@ from project1code import (
     calc_avg_body_mass_by_species, 
     calc_male_percentage_by_island,
     calc_avg_flipper_length_by_species,
-    calc_avg_bill_length_by_sex
+    calc_avg_bill_length_by_sex,
+    calc_avg_body_mass_by_year,
+    find_island_with_highest_avg_flipper_length
+
 )
 class TestPenguinAnalysis(unittest.TestCase):
 
