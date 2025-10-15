@@ -1,3 +1,19 @@
+# SI 201 Project 1
+# Names: William Huddleston, Matt, Sean
+# Uniqname/email: whudd@umich.edu
+# Collaborators: Each other
+
+# Function authorship:
+# - William: read_penguin_data, calc_avg_body_mass_by_species, calc_male_percentage_by_island,
+#            write_results_to_csv, main
+# - Sean:    calc_avg_flipper_length_by_species, calc_avg_bill_length_by_sex
+# - Matt (in progress): Will be implementing average body mass by year and
+#            the function to determine which island has the highest average flipper length
+
+# AI/Generative Tool Usage Statement:
+# Our group used AI to help us map out and plan the decomposition of our project, which informed how we split up tasks and designed our function diagram. AI also provided recommendations for how to perform calculations using the penguins dataset and assisted in creating thorough decomposition diagrams. Additionally, we consulted AI for guidance when we encountered issues with Git/GitHub (since this was our first time using a shared repository) and for clarification on the difference between usual and edge test cases, including recommendations for robust testing. Finally, AI was used for general code review and suggestions to help us understand and strengthen our approach for key functions.
+
+
 import csv
 
 def read_penguin_data(filename):
