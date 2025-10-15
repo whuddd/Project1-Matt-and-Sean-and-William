@@ -1,6 +1,6 @@
 # SI 201 Project 1
 # Names: William Huddleston, Matt, Sean
-# Uniqname/emails: whudd@umich.edu, 
+# Uniqname/emails: whudd@umich.edu, seanone@umich.edu, 
 # Collaborators: Each other
 
 # Function authorship:

@@ -89,7 +89,7 @@ class TestPenguinAnalysis(unittest.TestCase):
 
 
 
-#
+#Sean's test cases
     def test_avg_flipper_length_typical(self):
         data = [
             {'species': 'Adelie', 'flipper_length_mm': '189', 'sex': 'male'},
