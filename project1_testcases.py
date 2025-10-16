@@ -163,5 +163,67 @@ class TestPenguinAnalysis(unittest.TestCase):
             {'sex': 'female', 'bill_length_mm': '35.0', 'species': 'Adelie'}
         ]
         self.assertEqual(calc_avg_bill_length_by_sex(data), {'male': 45.0, 'female': 35.0})
+
+# Matts Test Cases
+    def test_avg_body_mass_by_year_typical(self):
+        #Calculates average body mass by year.
+        data = [
+            {'year': '2007', 'body_mass_g': '3700'},
+            {'year': '2007', 'body_mass_g': '3800'},
+            {'year': '2008', 'body_mass_g': '4000'}
+        ]
+        expected = {'2007': 3750.0, '2008': 4000.0}
+        self.assertEqual(calc_avg_body_mass_by_year(data), expected)
+
+    def test_avg_body_mass_by_year_missing_values(self):
+        #Skips missing or invalid year data.
+        data = [
+            {'year': '2007', 'body_mass_g': 'NA'},
+            {'year': '2008', 'body_mass_g': '3900'},
+            {'year': '2008', 'body_mass_g': ''}
+        ]
+        self.assertEqual(calc_avg_body_mass_by_year(data), {'2008': 3900.0})
+
+    def test_avg_body_mass_by_year_empty(self):
+        #Returns empty dict when no valid entries.
+        data = [
+            {'year': '2007', 'body_mass_g': 'NA'},
+            {'year': '2008', 'body_mass_g': 'NA'}
+        ]
+        self.assertEqual(calc_avg_body_mass_by_year(data), {})
+
+    def test_highest_avg_flipper_length_typical(self):
+        #Identifies island with highest average flipper length.
+        data = [
+            {'island': 'Dream', 'flipper_length_mm': '190'},
+            {'island': 'Biscoe', 'flipper_length_mm': '200'},
+            {'island': 'Torgersen', 'flipper_length_mm': '210'},
+            {'island': 'Biscoe', 'flipper_length_mm': '220'}
+        ]
+        result = find_island_with_highest_avg_flipper_length(data)
+        self.assertEqual(result[0], 'Biscoe')
+        self.assertAlmostEqual(result[1], 210.0, places=2)
+
+    def test_highest_avg_flipper_length_with_na(self):
+        #Handles missing data and still finds correct island.
+        data = [
+            {'island': 'Dream', 'flipper_length_mm': 'NA'},
+            {'island': 'Biscoe', 'flipper_length_mm': '195'},
+            {'island': 'Torgersen', 'flipper_length_mm': ''}
+        ]
+        result = find_island_with_highest_avg_flipper_length(data)
+        self.assertEqual(result[0], 'Biscoe')
+        self.assertAlmostEqual(result[1], 195.0, places=2)
+
+    def test_highest_avg_flipper_length_empty(self):
+        #Returns (None, None) if all data invalid.
+        data = [
+            {'island': 'Dream', 'flipper_length_mm': 'NA'},
+            {'island': 'Biscoe', 'flipper_length_mm': ''}
+        ]
+        result = find_island_with_highest_avg_flipper_length(data)
+        self.assertEqual(result, (None, None))
+
+        
 if __name__ == '__main__':
     unittest.main(verbosity=2)
